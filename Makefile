@@ -1,6 +1,6 @@
 ISTIO_VERSION=1.13.8
 
-.PHONY: start stop delete init deploy undeploy hosts lint
+.PHONY: help init start deploy deploy-istio deploy-addons stop delete
 
 minikube_ip := $(shell minikube ip)
 default: help;
@@ -28,17 +28,18 @@ deploy-istio:
 deploy-addons:
 	kubectl apply -f ./istio-${ISTIO_VERSION}/samples/addons/prometheus.yaml
 	kubectl apply -f ./istio-${ISTIO_VERSION}/samples/addons/kiali.yaml
-
-kiali:
-	helm install \
-  --namespace istio-system \
-  --set auth.strategy="anonymous" \
-  --repo https://kiali.org/helm-charts \
-  kiali-server \
-  kiali-server
+	kubectl apply -k ./bootstrap
 
 stop:
 	minikube stop
 
 delete:
 	minikube delete
+
+ip:
+	@echo $(minikube_ip)
+
+hosts:
+	@echo "## add following lines to /etc/hosts:"
+	@echo $(minikube_ip) kiali.example.com
+	@echo $(minikube_ip) prom.example.com

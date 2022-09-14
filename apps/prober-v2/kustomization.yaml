@@ -1,0 +1,18 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: prober-v2
+
+resources:
+  - ../prober
+
+commonLabels:
+  app: prober-v2
+  version: v2
+
+configMapGenerator:
+- name: prober-entrypoint
+  behavior: replace
+  files:
+  - entrypoint.sh

@@ -1,0 +1,27 @@
+# ---
+# apiVersion: security.istio.io/v1beta1
+# kind: AuthorizationPolicy
+# metadata:
+#   name: deny-all
+# spec:
+#   action: DENY
+#   rules:
+#   - from:
+#     - source:
+#         namespaces: ["aaa"]
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-namespaces
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            namespaces: ["prober"]
+        - source:
+            principals: ["cluster.local/ns/prober-v2/sa/*"]
+      to:
+        - operation:
+            methods: ["GET", "POST"]

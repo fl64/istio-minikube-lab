@@ -53,6 +53,7 @@ info:
 	@echo $(minikube_ip)
 	@echo istio ingress ip:
 	@echo $(istio_ingress_ip)
+	istioctl pc -n istio-system routes $(kubectl get pods -n istio-system -l app=istio-ingressgateway -o json | jq  .items[0].metadata.name -r )
 
 hosts:
 	@echo "## add following lines to /etc/hosts:"

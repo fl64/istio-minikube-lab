@@ -5,3 +5,5 @@ kind: Kustomization
 resources:
   - ./kiali-ingress.yaml
   - ./prom-ingress.yaml
+  - ./ingress-class.yaml
+  - ./iop.yaml

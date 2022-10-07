@@ -4,5 +4,7 @@ kind: Kustomization
 
 resources:
   - ./echo
+  - ./echo-istio-ingress
+  - ./echo-k8s-ingress
   - ./prober
   - ./prober-v2

@@ -5,11 +5,12 @@ metadata:
   name: kiali
   namespace: istio-system
 spec:
+  ingressClassName: istio
   rules:
     - http:
         paths:
           - path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: kiali

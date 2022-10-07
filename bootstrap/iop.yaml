@@ -1,0 +1,33 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: example
+spec:
+  profile: default
+  meshConfig:
+    accessLogFile: /dev/stdout
+    enableTracing: true
+  components:
+    egressGateways:
+    - name: istio-egressgateway
+      enabled: false
+      namespace: istio-system
+    ingressGateways:
+    - name: istio-ingressgateway
+      enabled: true
+      namespace: istio-system
+  # addonComponents:
+  #   grafana:
+  #     enabled: false
+  #     namespace: istio-system
+  #     k8s:
+  #       replicaCount: 1
+  #   kiali:
+  #     enabled: true
+  #     namespace: istio-system
+  #   prometheus:
+  #     enabled: true
+  #     namespace: istio-system
+  #   tracing:
+  #     enabled: false

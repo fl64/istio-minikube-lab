@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: echo-v2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: echo
+        version: v2
+    spec:
+      serviceAccountName: echo-v2
+      containers:
+      - image: docker.io/fl64/echo-http
+        imagePullPolicy: IfNotPresent
+        name: echo
+        env:
+        - name: version
+          value: v2
+        - name: uid
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        ports:
+        - containerPort: 8000
+          name: http
